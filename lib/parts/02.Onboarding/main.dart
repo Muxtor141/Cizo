@@ -1,4 +1,4 @@
-import 'package:cizo/parts/02.Onboarding/first_page.dart';
+import 'package:cizo/parts/02.Onboarding/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,7 +27,7 @@ class _OnboardingMainState extends State<OnboardingMain> {
 
   Widget _dotIndicator(bool state) {
     return AnimatedContainer(
-      duration: Duration(milliseconds: 100),
+      duration: Duration(milliseconds: 250),
       height: 9,
       margin: EdgeInsets.symmetric(horizontal: 7.5),
       decoration: BoxDecoration(
@@ -173,9 +173,10 @@ class _OnboardingMainState extends State<OnboardingMain> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     onPressed: () {
-                      _pageController.animateToPage(currentPageIndex!=2? currentPageIndex + 1:currentPageIndex,
+                      currentPageIndex!=2?
+                      _pageController.animateToPage( currentPageIndex + 1,
                           duration: Duration(milliseconds: 300),
-                          curve: Curves.linear);
+                          curve: Curves.linear):Navigator.pushNamed(context, 'auth');
                     },
                     child: AnimatedSwitcher(duration: Duration(milliseconds: 100),
                       child: Text(

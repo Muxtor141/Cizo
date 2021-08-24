@@ -45,9 +45,7 @@ class ProfileSetup extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.arrow_back)),
+                               Image.asset('assets/icons/arrow-left.png',width: 28,height: 28,),
                                 SizedBox(
                                   width: sizeQuery.width * 0.059,
                                 ),
@@ -62,9 +60,17 @@ class ProfileSetup extends StatelessWidget {
                             ),
                             SizedBox(height: heightQuery * 0.068),
                             Container(
-                              color: Colors.orange[300],
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(40)),
                               height: heightQuery * 0.1724,
                               width: sizeQuery.width * 0.373,
+                              child: Center(
+                                child: Container(width: 45,height: 45,
+                                  child: Image.asset('assets/icons/camera.png',)),
+                              ),
                             ),
                             SizedBox(
                               height: heightQuery * 0.0307,
@@ -119,9 +125,7 @@ class ProfileSetup extends StatelessWidget {
                                             color: Colors.grey[400]))
                                   ])),
                                   Spacer(),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.arrow_forward))
+                                  Image.asset('assets/icons/arrow-right.png',width: 28,height: 28,)
                                 ],
                               ),
                               height: heightQuery * 0.0862,
@@ -149,8 +153,7 @@ class ProfileSetup extends StatelessWidget {
                                             color: Color(0x66323438), width: 2),
                                         borderRadius: BorderRadius.circular(20),
                                       )),
-                                  onPressed: () {
-                                  },
+                                  onPressed: () {},
                                   child: Center(
                                     child: Text(
                                       "Confirm",

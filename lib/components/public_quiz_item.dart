@@ -17,9 +17,13 @@ class PublicQuizItem extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-                color: Colors.orange, borderRadius: BorderRadius.circular(25)),
+                color: Theme.of(context).primaryColor.withOpacity(0.1), borderRadius: BorderRadius.circular(25)),
             height: heightQuery * 0.0862,
             width: sizeQuery.width * 0.1866,
+            child: Center(
+              child: Container(width: 40,height: 40,
+                child: Image.asset('assets/icons/illustro1.png')),
+            ),
           ),
           SizedBox(
             width: sizeQuery.width * 0.0533,

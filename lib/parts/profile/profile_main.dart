@@ -110,7 +110,13 @@ class ProfilePage extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Color(0x3314C1FA),
                         borderRadius: BorderRadius.circular(12)),
-                    child: Icon(Icons.person)),
+                    child: Center(
+                    child: Container(
+                      width: 24,
+                      height: 24,
+                      child: Image.asset('assets/icons/person.png',color: Theme.of(context).primaryColor,),
+                    ),
+                  )),
                 SizedBox(
                   width: sizeQuery.width * 0.04,
                 ),
@@ -150,7 +156,13 @@ class ProfilePage extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Color(0x3314C1FA),
                         borderRadius: BorderRadius.circular(12)),
-                    child: Icon(Icons.person)),
+                    child: Center(
+                    child: Container(
+                      width: 24,
+                      height: 24,
+                      child: Image.asset('assets/icons/lock.png',color: Theme.of(context).primaryColor,),
+                    ),
+                  )),
                 SizedBox(
                   width: sizeQuery.width * 0.04,
                 ),
@@ -185,12 +197,19 @@ class ProfilePage extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                    height: heightQuery * 0.0492,
-                    width: sizeQuery.width * 0.1066,
-                    decoration: BoxDecoration(
-                        color: Color(0x3314C1FA),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Icon(Icons.person)),
+                  height: heightQuery * 0.0492,
+                  width: sizeQuery.width * 0.1066,
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Center(
+                    child: Container(
+                      width: 24,
+                      height: 24,
+                      child: Image.asset('assets/icons/exit.png'),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   width: sizeQuery.width * 0.04,
                 ),

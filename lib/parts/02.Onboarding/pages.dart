@@ -34,13 +34,15 @@ class OnboardingFirst extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      color: Colors.red,
-                      child: Image.asset(
-                        "assets/images/onboarding1.png",
-                        height: heightQuery * 0.142,
-                        width: 150,
-                        fit: BoxFit.contain,
+                    Container(height: heightQuery * 0.142,
+                          width: 150,color: Colors.orange,
+                   
+                      child:FittedBox(
+                        child: Image.asset(
+                          "assets/images/onboarding1.png",
+                       
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ],

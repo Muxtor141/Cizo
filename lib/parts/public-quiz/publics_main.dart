@@ -1,4 +1,5 @@
 import 'package:cizo/components/public_quiz_item.dart';
+import 'package:cizo/components/public_quiz_time.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -110,7 +111,7 @@ class _PublicMainState extends State<PublicMain> {
               child: ListView.builder(itemCount: 10,
                 itemBuilder: (c, index) {
                 return Container(margin: EdgeInsets.only(bottom: heightQuery*0.0307),
-                  child: PublicQuizItem()) ;
+                  child: PublicQuizTimeItem()) ;
               }),
             )
           ],

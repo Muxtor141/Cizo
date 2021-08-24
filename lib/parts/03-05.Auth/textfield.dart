@@ -1,4 +1,6 @@
+import 'package:cizo/components/cizo_icons_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AuthTextField extends StatefulWidget {
@@ -49,17 +51,23 @@ class _AuthTextFieldState extends State<AuthTextField> {
   List<Map<String, dynamic>> list = [
     {
       "hint": "Enter your full name",
-      "icon": Icons.person,
+      "icon": AssetImage(
+        'assets/icons/person.png',
+      ),
     },
     {
       "hint": "Enter your e-mail address",
       "hintLogin": "Enter your e-mail address",
-      "icon": Icons.mail,
+      "icon": AssetImage(
+        'assets/icons/mail.png',
+      ),
     },
     {
       "hint": "Create account password",
       "hintLogin": "Enter account password",
-      "icon": Icons.lock,
+      "icon": AssetImage(
+        'assets/icons/lock.png',
+      ),
     }
   ];
 
@@ -101,11 +109,11 @@ class _AuthTextFieldState extends State<AuthTextField> {
               fillColor: widget.controller.text.isNotEmpty
                   ? Colors.white
                   : Color(0x1AA9A9A9),
-              prefixIcon: Icon(list[widget.fieldIndex]['icon']),
+              prefixIcon: Container(
+                  padding: EdgeInsets.only(top: 17,bottom: 17,left: 20,right:15),
+                  child: ImageIcon(list[widget.fieldIndex]['icon'])),
               enabledBorder: decoration1,
-              counter: SizedBox(
-                height: heightQuery * 0.02,
-              ),
+             
               errorBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.red),
                 borderRadius: BorderRadius.circular(20),

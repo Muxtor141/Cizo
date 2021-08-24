@@ -1,4 +1,5 @@
 
+import 'package:cizo/parts/02.Onboarding/main.dart';
 import 'package:cizo/parts/03-05.Auth/login_part.dart';
 import 'package:cizo/parts/03-05.Auth/auth_main.dart';
 import 'package:cizo/parts/03-05.Auth/signup_part.dart';
@@ -6,10 +7,12 @@ import 'package:cizo/parts/04.setup/main.dart';
 import 'package:cizo/parts/08.home/home_main.dart';
 import 'package:cizo/parts/08.home/quiz_found.dart';
 import 'package:cizo/parts/08.home/quiz_not_found.dart';
+import 'package:cizo/parts/leaderboard/leaderboard.dart';
 import 'package:cizo/parts/profile/dialog.dart';
 import 'package:cizo/parts/profile/profile_main.dart';
 import 'package:cizo/parts/public-quiz/publics_main.dart';
 import 'package:cizo/parts/quiz/quiz_main.dart';
+import 'package:cizo/parts/quiz/result_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,7 +32,11 @@ class MyApp extends StatelessWidget {
         errorColor: Color(0xffF31629),
         primarySwatch: Colors.blue,
       ),
+
       home: MyHomePage(),
+      routes: {
+        'auth':(c)=>AuthMain(),
+      },
     );
   }
 }
@@ -48,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: QuizSolvingMain(),
+      body: ProfilePage(),
     // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

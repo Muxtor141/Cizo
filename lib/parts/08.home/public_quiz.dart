@@ -40,7 +40,12 @@ class HomePublicQuiz extends StatelessWidget {
           SizedBox(
             height: heightQuery * 0.037,
           ),
-          PublicQuizItem()
+          Expanded(child: ListView.builder(padding:EdgeInsets.zero,
+            itemCount: 6,
+            itemBuilder: (x, index) {
+            return Container(margin: EdgeInsets.only(bottom: heightQuery*0.0308),
+              child: PublicQuizItem());
+          }))
         ],
       ),
     );

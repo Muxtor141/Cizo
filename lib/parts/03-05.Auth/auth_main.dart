@@ -1,6 +1,7 @@
 import 'package:cizo/parts/03-05.Auth/login_part.dart';
 import 'package:cizo/parts/03-05.Auth/signup_part.dart';
 import 'package:cizo/parts/03-05.Auth/textfield.dart';
+import 'package:cizo/services/auth/auth_cubits.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +13,7 @@ class AuthMain extends StatefulWidget {
 }
 
 class _AuthMainState extends State<AuthMain> {
+  var _cubit = IsLoginCubit();
   bool isLoginPage = true;
 
   Color _tabBack = Color(0xff14C1FA);
@@ -29,8 +31,10 @@ class _AuthMainState extends State<AuthMain> {
           top: false,
           child: Column(
             children: [
-            AnimatedContainer(duration: Duration(milliseconds: 400),
-            height: isLoginPage?heightQuery*0.2: heightQuery*0.096),
+              AnimatedContainer(
+                  duration: Duration(milliseconds: 400),
+                  height:
+                      isLoginPage ? heightQuery * 0.2 : heightQuery * 0.096),
               // SizedBox(
               //   height: heightQuery * 0.096,
               // ),
@@ -104,7 +108,6 @@ class _AuthMainState extends State<AuthMain> {
                                             height: heightQuery * 0.0677,
                                             onPressed: () {
                                               setState(() {
-
                                                 isLoginPage = false;
                                               });
                                             },
@@ -132,7 +135,7 @@ class _AuthMainState extends State<AuthMain> {
                                     ),
                                     AnimatedSwitcher(
                                       duration: Duration(milliseconds: 500),
-                                      child:currentWidget,
+                                      child: currentWidget,
                                       switchInCurve: Curves.easeIn,
                                       switchOutCurve: Curves.easeInOut,
                                     ),

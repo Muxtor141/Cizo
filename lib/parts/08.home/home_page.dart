@@ -13,7 +13,9 @@ class HomePage extends StatelessWidget {
       child: Column(
         children: [
           HomeSearch(),
-          Expanded(child: HomePublicQuiz(),),
+          Expanded(
+            child: HomePublicQuiz(),
+          ),
         ],
       ),
     );

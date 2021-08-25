@@ -1,4 +1,3 @@
-
 import 'package:cizo/parts/02.Onboarding/main.dart';
 import 'package:cizo/parts/03-05.Auth/login_part.dart';
 import 'package:cizo/parts/03-05.Auth/auth_main.dart';
@@ -13,7 +12,14 @@ import 'package:cizo/parts/profile/profile_main.dart';
 import 'package:cizo/parts/public-quiz/publics_main.dart';
 import 'package:cizo/parts/quiz/quiz_main.dart';
 import 'package:cizo/parts/quiz/result_screen.dart';
+import 'package:cizo/services/home/fetchdata_main.dart';
+import 'package:cizo/services/home/fetchdata_public.dart';
+import 'package:cizo/services/home/main_events.dart';
+import 'package:cizo/services/home/public_events.dart';
+import 'package:cizo/services/onboarding/onboarding_bloc.dart';
+import 'package:cizo/services/public/ui_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,17 +31,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(backgroundColor: Color(0xffFAFAFA),
-      scaffoldBackgroundColor:Color(0xffFAFAFA) ,
-      primaryColorDark: Color(0xff323438),
+      theme: ThemeData(
+        backgroundColor: Color(0xffFAFAFA),
+        scaffoldBackgroundColor: Color(0xffFAFAFA),
+        primaryColorDark: Color(0xff323438),
         primaryColor: Color(0xff14C1FA),
         errorColor: Color(0xffF31629),
         primarySwatch: Colors.blue,
       ),
-
       home: MyHomePage(),
       routes: {
-        'auth':(c)=>AuthMain(),
+        'auth': (c) => AuthMain(),
+        
       },
     );
   }
@@ -49,14 +56,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   body: Container(
+    //     child: MultiBlocProvider(
+    //       providers: [
+    //         BlocProvider<OnboardingPagingBloc>(
+    //             create: (c) => OnboardingPagingBloc()),
+    //         BlocProvider<FetchDataBLoc>(create: (c) => FetchDataBLoc()),
+    //       ],
+    //       child: HomeMain(),
+    //     ),
+    //   ),
+    //   // This trailing comma makes auto-formatting nicer for build methods.
+    // );
 
-    return Scaffold(
-      body: ProfilePage(),
-    // This trailing comma makes auto-formatting nicer for build methods.
+
+      return Container(
+     child: Container(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<OnboardingPagingBloc>(
+                create: (c) => OnboardingPagingBloc()),
+                 BlocProvider<UpdateListCubit>(
+                create: (c) => UpdateListCubit()),
+                  BlocProvider<FetchPublicBLoc>(
+                create: (c) => FetchPublicBLoc()..add(UpdatePublicCardList())),
+            BlocProvider<FetchDataBLoc>(create: (c) => FetchDataBLoc()),
+          ],
+          child: HomeMain(),
+        ),
+      ),
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

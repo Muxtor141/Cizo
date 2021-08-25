@@ -1,5 +1,6 @@
 import 'package:cizo/parts/08.home/bottom_navbar.dart';
 import 'package:cizo/parts/08.home/home_page.dart';
+import 'package:cizo/parts/profile/profile_main.dart';
 import 'package:flutter/material.dart';
 
 class HomeMain extends StatefulWidget {
@@ -10,15 +11,24 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
+  PageController _pageController = PageController();
   @override
   Widget build(BuildContext context) {
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      bottomNavigationBar: HomeNavBar(),
-      body: 
-          HomePage(),
-    );
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Color(0xffFAFAFA),
+        bottomNavigationBar: HomeNavBar(pageController: _pageController,),
+        body: PageView( controller: _pageController,
+          onPageChanged: (int index){
+
+        },
+          children: [
+            HomePage(),
+            ProfilePage(),
+          ],
+        ));
   }
 }

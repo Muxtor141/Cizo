@@ -1,17 +1,19 @@
 import 'dart:ui';
 
-import 'package:cizo/services/home_dialog.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeNavBar extends StatefulWidget {
-  HomeNavBar({Key? key}) : super(key: key);
+  final PageController pageController;
+  HomeNavBar({Key? key, required this.pageController}) : super(key: key);
 
   @override
   _HomeNavBarState createState() => _HomeNavBarState();
 }
 
 class _HomeNavBarState extends State<HomeNavBar> {
+  bool isHomePage = true;
   @override
   Widget build(BuildContext context) {
     final sizeQuery = MediaQuery.of(context).size;
@@ -107,7 +109,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: dropBlur, sigmaY: dropBlur),
-      child: Container(
+      child: Container(color: Colors.transparent,
         height: heightQuery * 0.1527,
         child: Stack(
           children: [
@@ -134,20 +136,44 @@ class _HomeNavBarState extends State<HomeNavBar> {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget.pageController.animateToPage(0,
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.linear);
+                              setState(() {
+                                isHomePage = true;
+                              });
+                            },
                             child: Container(
                               width: 30,
                               height: 30,
-                              child: Image.asset('assets/icons/home.png'),
+                              child: Image.asset(
+                                'assets/icons/home.png',
+                                color: !isHomePage
+                                    ? Color(0x33323438)
+                                    : Theme.of(context).primaryColor,
+                              ),
                             ),
                           ),
                           Spacer(),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              widget.pageController.animateToPage(1,
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.linear);
+                              setState(() {
+                                isHomePage = false;
+                              });
+                            },
                             child: Container(
                               width: 30,
                               height: 30,
-                              child: Image.asset('assets/icons/person.png'),
+                              child: Image.asset(
+                                'assets/icons/person.png',
+                                color: isHomePage
+                                    ? Color(0x33323438)
+                                    : Theme.of(context).primaryColor,
+                              ),
                             ),
                           ),
                         ],

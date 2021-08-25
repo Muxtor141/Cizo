@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PublicQuizTimeItem extends StatelessWidget {
-  const PublicQuizTimeItem({Key? key}) : super(key: key);
+  final String quizName;
+  final String quizCode;
+  final String quizTime;
+  const PublicQuizTimeItem({Key? key,required this.quizCode,required this.quizName,required this.quizTime}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class PublicQuizTimeItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Automotive XII',
+                    quizName,
                     style: GoogleFonts.nunitoSans(
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
@@ -47,7 +50,7 @@ class PublicQuizTimeItem extends StatelessWidget {
                     height: heightQuery * 0.01,
                   ),
                   Text(
-                    'YH012Y',
+                    quizCode.toString(),
                     style: GoogleFonts.nunitoSans(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -63,14 +66,14 @@ class PublicQuizTimeItem extends StatelessWidget {
           Row(
             children: [
               Container(
-                
-                padding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                padding:
+                    EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
                 height: heightQuery * 0.05418,
                 decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(25)),
                 child: Text(
-                  'Postes 13 Minutes ago',
+                  'Posted $quizTime Minutes ago',
                   style: GoogleFonts.nunitoSans(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

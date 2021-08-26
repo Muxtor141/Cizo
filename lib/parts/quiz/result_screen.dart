@@ -1,8 +1,17 @@
+import 'package:cizo/parts/08.home/home_main.dart';
+import 'package:cizo/parts/leaderboard/leaderboard.dart';
+import 'package:cizo/services/leaderboard/leaderboard_bloc.dart';
+import 'package:cizo/services/leaderboard/leaderboard_events.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuizResultScreen extends StatelessWidget {
-  const QuizResultScreen({Key? key}) : super(key: key);
+  final int score;
+  final place;
+
+  const QuizResultScreen({Key? key, required this.place, required this.score})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +74,7 @@ class QuizResultScreen extends StatelessWidget {
                     SizedBox(
                       width: sizeQuery.width * 0.016,
                     ),
-                    Text('26752',
+                    Text(score.toString(),
                         style: GoogleFonts.nunito(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -114,36 +123,49 @@ class QuizResultScreen extends StatelessWidget {
                 SizedBox(
                   height: heightQuery * 0.037,
                 ),
-                Container(
-                    child: RichText(
-                  text: TextSpan(
-                    children: [
-                    TextSpan(
-                        text: 'You got ',
-                        style: GoogleFonts.nunitoSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColorDark.withOpacity(0.6))),
-                             TextSpan(
-                        text: '2600 ',
-                        style: GoogleFonts.nunitoSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).primaryColorDark.withOpacity(0.8))),
-                             TextSpan(
-                        text: 'points and you are on the ',
-                        style: GoogleFonts.nunitoSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColorDark.withOpacity(0.6))),
-                             TextSpan(
-                        text: '6th',
-                        style: GoogleFonts.nunitoSans(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).primaryColorDark.withOpacity(0.8)))
-                  ]),
-                )),
+                BlocBuilder<LeaderBoardBloc, List>(
+                  builder: (blocContext, blocState) {
+                    var place =
+                        blocContext.read<LeaderBoardBloc>().getPlace(score);
+                    return Container(
+                        child: RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: 'You got ',
+                            style: GoogleFonts.nunitoSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context)
+                                    .primaryColorDark
+                                    .withOpacity(0.6))),
+                        TextSpan(
+                            text: '$score',
+                            style: GoogleFonts.nunitoSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context)
+                                    .primaryColorDark
+                                    .withOpacity(0.8))),
+                        TextSpan(
+                            text: 'points and you are on the ',
+                            style: GoogleFonts.nunitoSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Theme.of(context)
+                                    .primaryColorDark
+                                    .withOpacity(0.6))),
+                        TextSpan(
+                            text: place,
+                            style: GoogleFonts.nunitoSans(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context)
+                                    .primaryColorDark
+                                    .withOpacity(0.8)))
+                      ]),
+                    ));
+                  },
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -151,7 +173,9 @@ class QuizResultScreen extends StatelessWidget {
                         style: GoogleFonts.nunitoSans(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: Theme.of(context).primaryColorDark.withOpacity(0.6))),
+                            color: Theme.of(context)
+                                .primaryColorDark
+                                .withOpacity(0.6))),
                   ],
                 ),
                 SizedBox(
@@ -165,7 +189,18 @@ class QuizResultScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (c) => MultiBlocProvider(providers: [
+                              BlocProvider.value(
+                                  value:
+                                      BlocProvider.of<LeaderBoardBloc>(context)
+                                        ..add(UpdateLeaderBoard()))
+                            ], child: LeaderBoardMain()),
+                          ),
+                        );
+                      },
                       child: Center(
                         child: Text(
                           "View LeaderBoard",
@@ -188,7 +223,13 @@ class QuizResultScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           )),
-                      onPressed: () {},
+                      onPressed: () {
+                        // Navigator.popUntil(context, ModalRoute.withName(""));
+                        // Navigator.pushAndRemoveUntil(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => HomeMain()),
+                        //     (Route<dynamic> route) => false);
+                      },
                       child: Center(
                         child: Text("Back to Home",
                             style: GoogleFonts.nunitoSans(

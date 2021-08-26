@@ -12,17 +12,21 @@ class FetchDataBLoc extends Bloc<HomeEvents, List> {
 
   List<QuizCardModel> questionModels = [];
 
-  getCard(String code) {
-    Future.delayed(
-      Duration(milliseconds: 200),
-    );
-    if (cardModels.isNotEmpty) {
-      return cardModels.firstWhere((element) => element.quizCode == code,
-          orElse: null);
-      
-    } else {
-      return null;
+  QuizCardModel? getCard(String code) {
+    List<dynamic> list1 = cardModels;
+     QuizCardModel? item;
+
+    try {
+      item = list1.firstWhere(
+        (element) => element.quizCode == code,
+      );
+    } catch (e) {
+      if (e == StateError) {
+        item = null;
+      }
     }
+
+    return item;
   }
 
   @override
@@ -42,6 +46,13 @@ class FetchQuestionBLoc extends Bloc<HomeEvents, List<QuestionModel>> {
   QuestionModel getQuestion(String code) {
     Future.delayed(Duration(milliseconds: 400));
     return questionList.firstWhere((element) => element.code == code);
+  }
+
+  int getQuestionTime(String code) {
+    QuestionModel item =
+        questionList.firstWhere((element) => element.code == code);
+
+    return item.questionTime;
   }
 
   @override

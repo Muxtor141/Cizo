@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cizo/parts/02.Onboarding/pages.dart';
+import 'package:cizo/services/onboarding/onboardin_cubits.dart';
 import 'package:cizo/services/onboarding/onboarding_bloc.dart';
 import 'package:cizo/services/onboarding/onboarding_events.dart';
 import 'package:flutter/material.dart';
@@ -79,28 +80,21 @@ class _OnboardingMainState extends State<OnboardingMain> {
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
 
-    return Container(
-     child: BlocConsumer<OnboardingPagingBloc, Map>(
+    return Scaffold(
+     body: BlocConsumer<OnboardCubit, Map>(
         listener: (c, i) {},
         builder: (blocContext, state) {
           int currentPageIndex = state['currentPage'];
-          print('${currentPageIndex.toString()} FROM BUILD');
-
           return Column(
             children: [
               Container(
                   height: heightQuery * 0.473,
                   child: PageView(
                     onPageChanged: (int index) {
-                    
-setState(() {
-  
-});
-                      blocContext
-                          .read<OnboardingPagingBloc>()
-                          .add(OnboardingUpdateIndex(index: index));
-
-                     
+                      setState(() {
+                          blocContext.read<OnboardCubit>().updateIndex();
+                        blocContext.read<OnboardCubit>().update();
+                      });
 
                       // setState(() {
                       //   currentPageIndex = index;
@@ -167,7 +161,7 @@ setState(() {
                       AnimatedSwitcher(
                         duration: Duration(microseconds: 200),
                         child: Text(
-                         state['secondText'],
+                          state['secondText'],
                           textAlign: TextAlign.center,
                           style: GoogleFonts.nunitoSans(
                             fontWeight: FontWeight.w400,
@@ -194,6 +188,8 @@ setState(() {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         onPressed: () {
+                        
+
                           currentPageIndex != 2
                               ? _pageController.animateToPage(
                                   currentPageIndex + 1,

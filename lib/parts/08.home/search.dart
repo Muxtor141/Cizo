@@ -35,31 +35,38 @@ class _HomeSearchState extends State<HomeSearch> {
           c1 = c;
           return CizoProgressIndicator();
         });
-    Timer(Duration(milliseconds: 2000), () {
-  Navigator.pop(c1);
-    QuizCardModel? card =
-        blocContext.read<FetchDataBLoc>().getCard(_controller.text);
-    Widget item = QuizNotFound(quizName: _controller.text.toString());
-    if (card != null) {
-      item = QuizFound(
-          quizCode: card.quizCode.toString(),
-          quizCreator: card.creator,
-          quizName: card.quizName);
-    }
- Navigator.push(
-        context1,
-        MaterialPageRoute(builder: (c) {
-          return MultiBlocProvider(providers: [
-            BlocProvider<FetchQuestionBLoc>(
-                create: (x) => FetchQuestionBLoc()..add(UpdateQuestionList())),
-          ], child: item);
-        }),
-      );
+          QuizCardModel? card =
+          blocContext.read<FetchDataBLoc>().getCard(_controller.text);
+    Timer(Duration(milliseconds: 1000), () {
+      Navigator.pop(c1);
+    
 
+      if (card!=null) {
+        Navigator.push(
+          context1,
+          MaterialPageRoute(builder: (c) {
+            return MultiBlocProvider(
+                providers: [
+                  BlocProvider<FetchQuestionBLoc>(
+                      create: (x) =>
+                          FetchQuestionBLoc()..add(UpdateQuestionList())),
+                ],
+                child: QuizFound(
+                    quizTime: card.quizTime,
+                    quizCode: card.quizCode.toString(),
+                    quizCreator: card.creator,
+                    quizName: card.quizName));
+          }),
+        );
+      } else if(card==null) {
+        Navigator.push(
+          context1,
+          MaterialPageRoute(builder: (c) {
+            return QuizNotFound(quizName: _controller.text.toString());
+          }),
+        );
+      }
     });
-  
-
-  
   }
 
   void onFocusChanged() {

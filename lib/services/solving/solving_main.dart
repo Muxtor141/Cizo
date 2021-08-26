@@ -6,10 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SolvingBloc extends Bloc<SolvingEvents, SingleQuestionModel> {
   SolvingBloc()
       : super(SingleQuestionModel(
-            question: "", rightAnswer: "", wrongAnswers: []));
+            question: "", rightAnswer: "", wrongAnswers: [],));
 
   List<SingleQuestionModel> list = [];
   int currentIndex = 0;
+
 
   @override
   Stream<SingleQuestionModel> mapEventToState(SolvingEvents event) async* {

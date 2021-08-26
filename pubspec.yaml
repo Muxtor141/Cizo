@@ -28,12 +28,15 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  firebase_core: "^1.5.0"
+  firebase_auth: ^3.0.2
   http: ^0.13.3
   json_annotation: ^4.0.1
   collection: ^1.15.0
   flutter_bloc: ^7.1.0
   google_fonts: ^2.1.0
   path_provider: ^2.0.2
+  image_picker: ^0.8.3+3
   bloc: ^7.1.0
 
 dev_dependencies:
@@ -81,6 +84,13 @@ flutter:
     - assets/icons/illustro2.png
     - assets/icons/illustro3.png
     - assets/icons/exit.png
+    - assets/images/canada.png
+    - assets/images/germany.png
+    - assets/images/indonesia.png
+    - assets/images/singapore.png
+    - assets/images/uk.png
+    - assets/images/us.png
+
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -115,7 +115,7 @@ class QuizNotFound extends StatelessWidget {
                         onPressed: () {},
                         child: Center(
                           child: Text(
-                            "Search Another Code21",
+                            "Search Another Code",
                             style: GoogleFonts.nunitoSans(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 18,

@@ -1,27 +1,57 @@
 import 'package:cizo/parts/02.Onboarding/main.dart';
-import 'package:cizo/parts/03-05.Auth/login_part.dart';
 import 'package:cizo/parts/03-05.Auth/auth_main.dart';
-import 'package:cizo/parts/03-05.Auth/signup_part.dart';
+import 'package:cizo/parts/04.setup/countries.dart';
 import 'package:cizo/parts/04.setup/main.dart';
+import 'package:cizo/services/onboarding/onboardin_cubits.dart';
+import 'package:cizo/services/setup/selected_country.dart';
 import 'package:cizo/parts/08.home/home_main.dart';
-import 'package:cizo/parts/08.home/quiz_found.dart';
-import 'package:cizo/parts/08.home/quiz_not_found.dart';
-import 'package:cizo/parts/leaderboard/leaderboard.dart';
-import 'package:cizo/parts/profile/dialog.dart';
-import 'package:cizo/parts/profile/profile_main.dart';
-import 'package:cizo/parts/public-quiz/publics_main.dart';
-import 'package:cizo/parts/quiz/quiz_main.dart';
-import 'package:cizo/parts/quiz/result_screen.dart';
 import 'package:cizo/services/home/fetchdata_main.dart';
 import 'package:cizo/services/home/fetchdata_public.dart';
-import 'package:cizo/services/home/main_events.dart';
 import 'package:cizo/services/home/public_events.dart';
 import 'package:cizo/services/onboarding/onboarding_bloc.dart';
 import 'package:cizo/services/public/ui_cubit.dart';
+import 'package:cizo/services/setup/select_country.dart';
+import 'package:cizo/services/setup/setup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+Map<String, Widget Function(BuildContext)> routeMap(BuildContext context) {
+
+  return {
+    'countries': (c) => MultiBlocProvider(providers: [
+          BlocProvider(create: (c) {
+    
+            return SelectCountry()..updateList();
+          }),
+          BlocProvider.value(
+              value: BlocProvider.of<SelectedCountryCubit>(context))
+        ], child: CountriesListPage()),
+    'auth': (c) => AuthMain(),
+    "/main": (c) => MultiBlocProvider(
+          providers: [
+            BlocProvider<OnboardingPagingBloc>(
+                create: (c) => OnboardingPagingBloc()),
+            BlocProvider<UpdateListCubit>(create: (c) => UpdateListCubit()),
+            BlocProvider<FetchPublicBLoc>(
+                create: (c) => FetchPublicBLoc()..add(UpdatePublicCardList())),
+            BlocProvider<FetchDataBLoc>(create: (c) => FetchDataBLoc()),
+          ],
+          child: HomeMain(),
+        ),
+    'profileSetup': (c) => MultiBlocProvider(
+          providers: [
+            BlocProvider<UploadImageCubit>(create: (c) => UploadImageCubit()),
+            BlocProvider<SelectedCountryCubit>(
+                create: (c) => SelectedCountryCubit()),
+            BlocProvider<SelectCountry>(create: (c) => SelectCountry()),
+          ],
+          child: ProfileSetup(),
+        )
+  };
+}
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -40,10 +70,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
-      routes: {
-        'auth': (c) => AuthMain(),
-        
-      },
+      routes: routeMap(context),
     );
   }
 }
@@ -65,23 +92,33 @@ class _MyHomePageState extends State<MyHomePage> {
     //         BlocProvider<OnboardingPagingBloc>(
     //             create: (c) => OnboardingPagingBloc()),
     //         BlocProvider<FetchDataBLoc>(create: (c) => FetchDataBLoc()),
+    //              BlocProvider<UpdateListCubit>(
+    //             create: (c) => UpdateListCubit()),
+    //               BlocProvider<FetchPublicBLoc>(
+    //             create: (c) => FetchPublicBLoc()..add(UpdatePublicCardList())),
+
+    //                BlocProvider<OnboardCubit>(
+    //             create: (c) => OnboardCubit()..update()),
+
     //       ],
-    //       child: HomeMain(),
+    //       child: OnboardingMain(),
     //     ),
     //   ),
     //   // This trailing comma makes auto-formatting nicer for build methods.
     // );
 
-
-      return Container(
-     child: Container(
+    return Container(
+      child: Container(
         child: MultiBlocProvider(
-          providers: [
+          providers: [   BlocProvider<SelectedCountryCubit>(
+                create: (c) => SelectedCountryCubit()),
+                 BlocProvider<OnboardCubit>(
+                create: (c) => OnboardCubit()..update()),
+            BlocProvider<UploadImageCubit>(create: (c) => UploadImageCubit()),
             BlocProvider<OnboardingPagingBloc>(
                 create: (c) => OnboardingPagingBloc()),
-                 BlocProvider<UpdateListCubit>(
-                create: (c) => UpdateListCubit()),
-                  BlocProvider<FetchPublicBLoc>(
+            BlocProvider<UpdateListCubit>(create: (c) => UpdateListCubit()),
+            BlocProvider<FetchPublicBLoc>(
                 create: (c) => FetchPublicBLoc()..add(UpdatePublicCardList())),
             BlocProvider<FetchDataBLoc>(create: (c) => FetchDataBLoc()),
           ],

@@ -14,15 +14,14 @@ class QuizQuestion extends StatelessWidget {
     return BlocBuilder<SolvingBloc,SingleQuestionModel>(
       builder: (blocContext, blocState) {
         return Container(
-        margin: EdgeInsets.only(bottom: heightQuery * 0.0307),
+       
         padding: EdgeInsets.only(
             left: sizeQuery.width * 0.0666, right: sizeQuery.width * 0.0666),
         child: Container(
           padding: EdgeInsets.all(25),
           width: sizeQuery.width * 0.866,
-          height: heightQuery * 0.128,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(35)),
+      
+          
           child: Text(
             '1.${blocState.question}',
             style: GoogleFonts.nunitoSans(

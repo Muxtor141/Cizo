@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "709837977285",
+    "project_id": "cizo-e89ab",
+    "storage_bucket": "cizo-e89ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709837977285:android:c65b5fd1f5e60a2334e2ac",
+        "android_client_info": {
+          "package_name": "com.example.cizo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709837977285-gscvrtvi2duirrmb5264va9iikt4s1t3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ5BDAsd5M4GP7FmBHzyhjoBKA3NRnnx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709837977285-gscvrtvi2duirrmb5264va9iikt4s1t3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

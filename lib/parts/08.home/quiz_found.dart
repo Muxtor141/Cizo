@@ -5,6 +5,7 @@ import 'package:cizo/components/progress_indicator.dart';
 import 'package:cizo/models/question_model.dart';
 import 'package:cizo/parts/quiz/quiz_main.dart';
 import 'package:cizo/services/home/fetchdata_main.dart';
+import 'package:cizo/services/solving/solving_controller_cubit.dart';
 import 'package:cizo/services/solving/solving_events.dart';
 import 'package:cizo/services/solving/solving_main.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,12 +17,15 @@ class QuizFound extends StatelessWidget {
   final String quizName;
   final String quizCode;
   final String quizCreator;
-  const QuizFound(
-      {Key? key,
-      required this.quizCode,
-      required this.quizCreator,
-      required this.quizName})
-      : super(key: key);
+  final int quizTime;
+
+  const QuizFound({
+    Key? key,
+    required this.quizCode,
+    required this.quizCreator,
+    required this.quizName,
+    required this.quizTime
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +186,8 @@ class QuizFound extends StatelessWidget {
                           height: heightQuery * 0.0554,
                         ),
                         BlocBuilder<FetchQuestionBLoc, List>(
-                          builder: (blocContext, index) {
+                          builder: (blocContext, state) {
+                   
                             return Container(
                               height: heightQuery * 0.0715,
                               child: OutlinedButton(
@@ -203,22 +208,29 @@ class QuizFound extends StatelessWidget {
                                           c1 = c;
                                           return CizoProgressIndicator();
                                         });
-                                          Timer(
-                                          Duration(milliseconds: 1500), () {
-
-                                            Navigator.of(context, rootNavigator: true).pop();
-                                               Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (c) {
-                                      return
-
-                                     MultiBlocProvider(providers: [
-                                       BlocProvider(create: (c)=>SolvingBloc()..add(UpdateIndex(quizCode),),),
-                                     ],child: QuizSolvingMain(code: quizCode,));
-                                    }));
-                                          });
-                                      
-
-                                 
+                                    Timer(Duration(milliseconds: 1500), () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop();
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (c) {
+                                        return MultiBlocProvider(
+                                            providers: [
+                                              BlocProvider(
+                                                create: (c) => SolvingBloc()
+                                                  ..add(
+                                                    UpdateIndex(quizCode),
+                                                  ),
+                                              ),
+                                              BlocProvider(
+                                                create: (c) =>
+                                                    SolvingControllerCubit(),
+                                              )
+                                            ],
+                                            child: QuizSolvingMain(
+                                              quizTime: quizTime,
+                                            ));
+                                      }));
+                                    });
                                   },
                                   child: Center(
                                     child: Text(

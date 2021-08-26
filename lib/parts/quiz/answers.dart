@@ -1,4 +1,8 @@
+import 'package:cizo/models/leader_model.dart';
 import 'package:cizo/models/single_question_model.dart';
+import 'package:cizo/parts/quiz/result_screen.dart';
+import 'package:cizo/services/leaderboard/leaderboard_bloc.dart';
+import 'package:cizo/services/leaderboard/leaderboard_events.dart';
 import 'package:cizo/services/solving/solving_events.dart';
 import 'package:cizo/services/solving/solving_main.dart';
 import 'package:cizo/services/solving/solving_ui_cubits.dart';
@@ -7,7 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuizAnswers extends StatefulWidget {
-  QuizAnswers({Key? key}) : super(key: key);
+  final bool blocState;
+  QuizAnswers({Key? key, required this.blocState}) : super(key: key);
 
   @override
   _QuizAnswersState createState() => _QuizAnswersState();
@@ -15,6 +20,7 @@ class QuizAnswers extends StatefulWidget {
 
 class _QuizAnswersState extends State<QuizAnswers> {
   String rightAnswer = '';
+  int correctAnswers = 0;
 
   Widget answerCard(double widthQuery, double heightQuery, int orderIndex,
       String answer, int currentIndex, BuildContext cubit) {
@@ -52,58 +58,73 @@ class _QuizAnswersState extends State<QuizAnswers> {
     );
   }
 
+  void navigate() {
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+        builder: (c) => MultiBlocProvider(
+              providers: [
+                BlocProvider.value(
+                    value: BlocProvider.of<LeaderBoardBloc>(context)
+                      ..add(UpdateLeaderBoard()))
+              ],
+              child: QuizResultScreen(place: 3, score: correctAnswers * 100),
+            )),(route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.blocState == false) {
+      navigate();
+    }
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
-    return Expanded(
-      child: BlocBuilder<SolvingBloc, SingleQuestionModel>(
-        builder: (blocContext, blocState) {
-        
-          var answerList = [blocState.rightAnswer, ...blocState.wrongAnswers];
+    return BlocBuilder<SolvingBloc, SingleQuestionModel>(
+      builder: (blocContext, blocState) {
+        var answerList = [blocState.rightAnswer, ...blocState.wrongAnswers];
 
-          return Container(
-            padding: EdgeInsets.only(
-                left: sizeQuery.width * 0.0666,
-                right: sizeQuery.width * 0.0666),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40))),
-            child: Container(
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                    offset: Offset(0, 7.0),
-                    blurRadius: 75,
-                    color: Color(0XFFC5C5C5).withOpacity(0.25)),
-              ]),
-              child: BlocBuilder<SelectAnswerCubit, int>(
-                builder: (cubitContext, cubitState) {
-                  return Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          child: ListView.builder(
-                              itemCount: 4,
-                              itemBuilder: (x, index) {
-                                return Container(
-                                    margin: index == 0
-                                        ? null
-                                        : EdgeInsets.only(
-                                            top: heightQuery * 0.0307),
-                                    child: answerCard(
-                                        sizeQuery.width,
-                                        heightQuery,
-                                        index + 1,
-                                        answerList[index],
-                                        cubitState,
-                                        cubitContext));
-                              }),
-                        ),
+        return Container(
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 7.0),
+                  blurRadius: 75,
+                  color: Color(0XFFC5C5C5).withOpacity(0.25)),
+            ]),
+            child: BlocBuilder<SelectAnswerCubit, int>(
+              builder: (cubitContext, cubitState) {
+                return Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                            itemCount: 4,
+                            itemBuilder: (x, index) {
+                              return Container(
+                                  margin: index == 0
+                                      ? null
+                                      : EdgeInsets.only(
+                                          top: heightQuery * 0.0307),
+                                  child: answerCard(
+                                      sizeQuery.width,
+                                      heightQuery,
+                                      index + 1,
+                                      answerList[index],
+                                      cubitState,
+                                      cubitContext));
+                            }),
                       ),
-                      SizedBox(height: heightQuery * 0.04187),
-                      Container(
+                    ),
+                    SizedBox(height: heightQuery * 0.04187),
+                    BlocListener<LeaderBoardBloc, List>(
+                      listener: (listenerContext, listenerState) {
+                        if (blocContext.read<SolvingBloc>().currentIndex ==
+                            blocContext.read<SolvingBloc>().list.length - 1) {
+                          listenerContext.read<LeaderBoardBloc>().add(AddLeader(
+                              LeaderModel(
+                                  leaderName: "Muxtor",
+                                  leaderScore: correctAnswers * 100)));
+                        }
+                      },
+                      child: Container(
                         height: heightQuery * 0.0702,
                         width: sizeQuery.width * 0.866,
                         child: TextButton(
@@ -120,21 +141,26 @@ class _QuizAnswersState extends State<QuizAnswers> {
                                   ? Theme.of(context).primaryColor
                                   : Colors.transparent),
                           onPressed: () {
-                            if (cubitState != 0) {
-                              cubitContext.read<SelectAnswerCubit>().update(0);
-                              blocContext
-                                  .read<SolvingBloc>()
-                                  .add(NextQuestion());
-                              if (rightAnswer == blocState.rightAnswer) {
-                                print('CORRECT ANSWER');
-                              } else {
-                                print('WRONG ANSWER');
+                            if (blocContext.read<SolvingBloc>().currentIndex ==
+                                blocContext.read<SolvingBloc>().list.length -
+                                    1) {
+                              navigate();
+                            } else {
+                              if (cubitState != 0) {
+                                cubitContext
+                                    .read<SelectAnswerCubit>()
+                                    .update(0);
+                                blocContext
+                                    .read<SolvingBloc>()
+                                    .add(NextQuestion());
+                                if (rightAnswer == blocState.rightAnswer) {
+                                  correctAnswers++;
+                                  print('CORRECT ANSWER');
+                                } else {
+                                  print('WRONG ANSWER');
+                                }
                               }
                             }
-
-                            // setState(() {
-                            //   buttonTest = !buttonTest;
-                            // });
                           },
                           child: Text(
                             'Next',
@@ -148,17 +174,17 @@ class _QuizAnswersState extends State<QuizAnswers> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: heightQuery * 0.07266,
-                      )
-                    ],
-                  );
-                },
-              ),
+                    ),
+                    SizedBox(
+                      height: heightQuery * 0.07266,
+                    )
+                  ],
+                );
+              },
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

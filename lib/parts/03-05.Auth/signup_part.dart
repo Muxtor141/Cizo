@@ -1,4 +1,6 @@
 import 'package:cizo/parts/03-05.Auth/textfield.dart';
+import 'package:cizo/services/auth/signup_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,10 +31,10 @@ class AuthSignUp extends StatelessWidget {
     for (var e in list) {
       if (e.currentState!.validate() == true) {
         validatesIndex++;
-      }else{}
+      } else {}
     }
 
-    if (validatesIndex==3) {
+    if (validatesIndex == 3) {
       buttonColor = Color(0xff14C1FA);
       _styleButton = GoogleFonts.nunitoSans(
           fontWeight: FontWeight.w700, fontSize: 18, color: Colors.white);
@@ -45,9 +47,12 @@ class AuthSignUp extends StatelessWidget {
     }
   }
 
+  final auth = Authentication();
 //STATE RELATED END
   @override
   Widget build(BuildContext context) {
+     
+
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
     final topSpace = SizedBox(
@@ -114,7 +119,8 @@ class AuthSignUp extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     )),
                 onPressed: () {
-                  changeButtonState();
+                  auth.registrateUser("ssdddd", "_cPassword.text");
+                  if (changeButtonState()) {}
                 },
                 child: Center(
                   child: Text(

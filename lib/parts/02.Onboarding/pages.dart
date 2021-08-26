@@ -11,7 +11,7 @@ class OnboardingFirst extends StatelessWidget {
           SizedBox(
             height: heightQuery * 0.13,
           ),
-          Container( color: Colors.yellow,
+          Container(
               height: heightQuery * 0.342,
               child: Stack(children: [
                 Column(
@@ -58,7 +58,7 @@ class OnboardingFirst extends StatelessWidget {
             height: heightQuery * 0.098,
           ),
           Container(
-              color: Colors.yellow,
+           
               height: heightQuery * 0.3742,
               child: Stack(children: [
                 Column(
@@ -127,7 +127,7 @@ class OnboardingFirst extends StatelessWidget {
           SizedBox(
             height: heightQuery * 0.13,
           ),
-          Container( color: Colors.yellow,
+          Container( 
               height: heightQuery * 0.342,
               child: Stack(children: [
                 Column(

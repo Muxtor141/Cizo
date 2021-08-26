@@ -43,7 +43,7 @@ class HomePublicQuiz extends StatelessWidget {
                      Navigator.of(context)
                               .push(MaterialPageRoute(builder: (x) {
                             return MultiBlocProvider(providers: [
-                 
+                   BlocProvider.value(value: BlocProvider.of<FetchPublicBLoc>(context)),
                                 BlocProvider.value(value: BlocProvider.of<UpdateListCubit>(context)),
                                BlocProvider.value(value: BlocProvider.of<FetchDataBLoc>(context)),
                             ],child: PublicMain());

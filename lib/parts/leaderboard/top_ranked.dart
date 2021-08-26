@@ -1,11 +1,20 @@
+import 'package:cizo/models/leader_model.dart';
+import 'package:cizo/services/leaderboard/leaderboard_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LeaderboardTop extends StatelessWidget {
   const LeaderboardTop({Key? key}) : super(key: key);
 
-  Widget _card(Size sizeQuery, double heightQuery,int place) {
-    return Container(margin: EdgeInsets.only(bottom: heightQuery * 0.02463),
+  Widget _card(
+      Size sizeQuery, double heightQuery, int place, BuildContext blocContext) {
+    LeaderModel model =
+        blocContext.read<LeaderBoardBloc>().getSpecificLeader(place);
+  
+
+    return Container(
+      margin: EdgeInsets.only(bottom: heightQuery * 0.02463),
       height: heightQuery * 0.1244,
       child: Stack(children: [
         Container(
@@ -28,7 +37,7 @@ class LeaderboardTop extends StatelessWidget {
                 width: sizeQuery.width * 0.04266,
               ),
               Text(
-                'Theresia Lee',
+                model.leaderName,
                 style: GoogleFonts.nunitoSans(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -56,7 +65,7 @@ class LeaderboardTop extends StatelessWidget {
                         color: Color(0xffFFB72B)),
                     child: Center(
                       child: Text(
-                        '31002',
+                        model.leaderScore.toString(),
                         style: GoogleFonts.nunitoSans(
                             fontWeight: FontWeight.w400,
                             fontSize: 13,
@@ -67,7 +76,8 @@ class LeaderboardTop extends StatelessWidget {
                   Container(
                     height: heightQuery * 0.05418,
                     width: sizeQuery.width * 0.1173,
-                    child: Image.asset('assets/images/medal${place.toString()}.png'),
+                    child: Image.asset(
+                        'assets/images/medal${place.toString()}.png'),
                   )
                 ],
               ),
@@ -83,7 +93,7 @@ class LeaderboardTop extends StatelessWidget {
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
     return Container(
-    color: Color(0xff14C1FA),
+      color: Color(0xff14C1FA),
       height: heightQuery * 0.5444,
       child:
           // SizedBox(
@@ -91,30 +101,34 @@ class LeaderboardTop extends StatelessWidget {
           // ),
           // 35 px height
 
-          Column(
-        children: [
-          SizedBox(
-            height: heightQuery * 0.0911,
-          ),
-          Row(
+          BlocBuilder<LeaderBoardBloc, List>(
+        builder: (blocContext, blocState) {
+          return Column(
+            children: [
+              SizedBox(
+                height: heightQuery * 0.0911,
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _card(sizeQuery, heightQuery,1),
+                  _card(sizeQuery, heightQuery, 1, blocContext),
                 ],
               ),
-          Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _card(sizeQuery, heightQuery,2),
+                  _card(sizeQuery, heightQuery, 2, blocContext),
                 ],
               ),
-           Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _card(sizeQuery, heightQuery,3),
+                  _card(sizeQuery, heightQuery, 3, blocContext),
                 ],
               ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

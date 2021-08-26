@@ -18,26 +18,27 @@ class SolvingEvents {
     var response = await db.getQuestionsList();
     List responseList = jsonDecode(response);
 
-    var question = responseList.firstWhere((element) => element['quizCode'] == code);
+    var question =
+        responseList.firstWhere((element) => element['quizCode'] == code);
 
     List<SingleQuestionModel> newList = [];
     for (var singlequestion in question['questions']) {
       var wrongAnswers = singlequestion['answers'];
       var item = SingleQuestionModel(
+       
           question: singlequestion['question'],
           rightAnswer: singlequestion['answers'][0],
           wrongAnswers: wrongAnswers.getRange(1, 4).toList());
-              newList.add(item);
+      newList.add(item);
     }
-    
-
 
     return newList;
   }
 }
 
-class UpdateIndex extends SolvingEvents{
+class UpdateIndex extends SolvingEvents {
   final String model;
   UpdateIndex(this.model);
 }
-class NextQuestion extends SolvingEvents{}
+
+class NextQuestion extends SolvingEvents {}

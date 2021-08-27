@@ -95,7 +95,7 @@ class _AuthLoginState extends State<AuthLogin> {
     FirebaseAuth.instance.userChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
-      } else if (user.email == "muxtor1411@gmail.com") {
+      } else  {
         Navigator.of(context)
             .pushNamed("profileSetup", arguments: ProfileArguments(true));
         print('User is signed in!');

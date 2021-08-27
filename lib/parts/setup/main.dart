@@ -260,7 +260,7 @@ class ProfileSetup extends StatelessWidget {
                                           )),
                                       onPressed: () {
                                         if (args.isSetup == true) {
-                                          Navigator.pushNamed(context, "/main");
+                                          Navigator.pushNamedAndRemoveUntil(context, "/main",(route) => false);
                                         } else {
                                           Navigator.pop(context);
                                         }

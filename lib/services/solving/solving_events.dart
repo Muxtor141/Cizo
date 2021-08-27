@@ -17,7 +17,7 @@ class SolvingEvents {
     //   throw SocketException('No internet');
     // }
     var response;
-    if (type = false) {
+    if (type == false) {
       response = await db.getQuestionsList();
     } else {
        response = await db.getPublicQuestionsList();

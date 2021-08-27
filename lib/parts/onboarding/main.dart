@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cizo/parts/02.Onboarding/pages.dart';
+import 'package:cizo/parts/onboarding/pages.dart';
 import 'package:cizo/services/onboarding/onboardin_cubits.dart';
 import 'package:cizo/services/onboarding/onboarding_bloc.dart';
 import 'package:cizo/services/onboarding/onboarding_events.dart';

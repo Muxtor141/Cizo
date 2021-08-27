@@ -1,13 +1,16 @@
 import 'dart:async';
 
-import 'package:cizo/parts/03-05.Auth/login_part.dart';
-import 'package:cizo/parts/03-05.Auth/signup_part.dart';
-import 'package:cizo/parts/03-05.Auth/textfield.dart';
+
+import 'package:cizo/parts/auth/signup_part.dart';
+import 'package:cizo/services/auth/auth_bloc.dart';
 import 'package:cizo/services/auth/auth_cubits.dart';
 import 'package:cizo/services/auth/signup_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'login_part.dart';
 
 class AuthMain extends StatefulWidget {
   AuthMain({Key? key}) : super(key: key);
@@ -22,10 +25,10 @@ class _AuthMainState extends State<AuthMain> {
 
   @override
   Widget build(BuildContext context) {
-    var currentWidget = isExtended ? AuthLogin() : AuthSignUp();
-
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
+
+ Firebase.initializeApp();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
@@ -83,7 +86,7 @@ class _AuthMainState extends State<AuthMain> {
                                       setState(() {
                                         isLoginPage = true;
                                       });
-                                       Timer(Duration(milliseconds: 400), () {
+                                      Timer(Duration(milliseconds: 400), () {
                                         setState(() {
                                           isExtended = true;
                                         });
@@ -145,7 +148,19 @@ class _AuthMainState extends State<AuthMain> {
                             ),
                             AnimatedSwitcher(
                               duration: Duration(milliseconds: 500),
-                              child: currentWidget,
+                              child: BlocBuilder<AuthBloc, bool>(
+                                builder: (c, state) {
+                                  return isExtended
+                                      ? AuthLogin(
+                                          blocContext: c,
+                                          blocState: state,
+                                        )
+                                      : AuthSignUp(
+                                          blocContext: c,
+                                          blocState: state,
+                                        );
+                                },
+                              ),
                               switchInCurve: Curves.easeIn,
                               switchOutCurve: Curves.easeInOut,
                             ),

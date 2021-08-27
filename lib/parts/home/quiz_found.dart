@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:cizo/components/progress_indicator.dart';
 import 'package:cizo/models/question_model.dart';
-import 'package:cizo/parts/quiz/quiz_main.dart';
+import 'package:cizo/parts/solving/quiz_main.dart';
 import 'package:cizo/services/home/fetchdata_main.dart';
 import 'package:cizo/services/solving/solving_controller_cubit.dart';
 import 'package:cizo/services/solving/solving_events.dart';
@@ -14,18 +14,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuizFound extends StatelessWidget {
+  final bool isPublic;
   final String quizName;
   final String quizCode;
   final String quizCreator;
   final int quizTime;
 
-  const QuizFound({
-    Key? key,
-    required this.quizCode,
-    required this.quizCreator,
-    required this.quizName,
-    required this.quizTime
-  }) : super(key: key);
+  const QuizFound(
+      {Key? key,
+      required this.isPublic,
+      required this.quizCode,
+      required this.quizCreator,
+      required this.quizName,
+      required this.quizTime})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +189,6 @@ class QuizFound extends StatelessWidget {
                         ),
                         BlocBuilder<FetchQuestionBLoc, List>(
                           builder: (blocContext, state) {
-                   
                             return Container(
                               height: heightQuery * 0.0715,
                               child: OutlinedButton(
@@ -218,7 +219,7 @@ class QuizFound extends StatelessWidget {
                                               BlocProvider(
                                                 create: (c) => SolvingBloc()
                                                   ..add(
-                                                    UpdateIndex(quizCode),
+                                                    UpdateIndex(quizCode,isPublic),
                                                   ),
                                               ),
                                               BlocProvider(

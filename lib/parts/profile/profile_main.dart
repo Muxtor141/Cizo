@@ -1,12 +1,17 @@
+import 'package:cizo/parts/04.setup/main.dart';
 import 'package:cizo/parts/profile/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
+    
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
     return Container(
@@ -104,19 +109,25 @@ class ProfilePage extends StatelessWidget {
             height: heightQuery * 0.0788,
             child: Row(
               children: [
-                Container(
-                    height: heightQuery * 0.0492,
-                    width: sizeQuery.width * 0.1066,
-                    decoration: BoxDecoration(
-                        color: Color(0x3314C1FA),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Center(
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      child: Image.asset('assets/icons/person.png',color: Theme.of(context).primaryColor,),
-                    ),
-                  )),
+              
+                  
+                 Container(
+                      height: heightQuery * 0.0492,
+                      width: sizeQuery.width * 0.1066,
+                      decoration: BoxDecoration(
+                          color: Color(0x3314C1FA),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Center(
+                        child: Container(
+                          width: 24,
+                          height: 24,
+                          child: Image.asset(
+                            'assets/icons/person.png',
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      )),
+                
                 SizedBox(
                   width: sizeQuery.width * 0.04,
                 ),
@@ -129,7 +140,11 @@ class ProfilePage extends StatelessWidget {
                 ),
                 Spacer(),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                     
+                    Navigator.pushNamed(context, "profileSetup",arguments: ProfileArguments(false));
+                  
+                    },
                     icon: Icon(
                       Icons.arrow_forward_ios,
                       size: 18,
@@ -157,17 +172,20 @@ class ProfilePage extends StatelessWidget {
                         color: Color(0x3314C1FA),
                         borderRadius: BorderRadius.circular(12)),
                     child: Center(
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      child: Image.asset('assets/icons/lock.png',color: Theme.of(context).primaryColor,),
-                    ),
-                  )),
+                      child: Container(
+                        width: 24,
+                        height: 24,
+                        child: Image.asset(
+                          'assets/icons/lock.png',
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    )),
                 SizedBox(
                   width: sizeQuery.width * 0.04,
                 ),
                 Text(
-                  'Edit Profile',
+                  'Change Password',
                   style: GoogleFonts.nunitoSans(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -214,7 +232,7 @@ class ProfilePage extends StatelessWidget {
                   width: sizeQuery.width * 0.04,
                 ),
                 Text(
-                  'Edit Profile',
+                  'Log out',
                   style: GoogleFonts.nunitoSans(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

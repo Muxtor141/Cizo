@@ -9,9 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+class ProfileArguments {
+  final bool isSetup;
+  ProfileArguments(this.isSetup);
+}
+
 class ProfileSetup extends StatelessWidget {
   const ProfileSetup({Key? key}) : super(key: key);
-
+  static const routeName = 'profileSetup';
   void _showPicker(context, BuildContext cubit) {
     showModalBottomSheet(
         context: context,
@@ -44,6 +49,7 @@ class ProfileSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as ProfileArguments;
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -181,20 +187,21 @@ class ProfileSetup extends StatelessWidget {
                                       SizedBox(
                                         width: sizeQuery.width * 0.0533,
                                       ),
-                                      BlocBuilder<SelectedCountryCubit,String>(
+                                      BlocBuilder<SelectedCountryCubit, String>(
                                         builder:
                                             (countryContext, countryState) {
                                           return RichText(
-                                            text: TextSpan(children: [
-                                          TextSpan(
-                                              text: countryState.split(" ").join(""),
-                                              style: GoogleFonts.nunitoSans(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Color(0xff323438))),
-                                        ]));
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                                text: countryState
+                                                    .split(" ")
+                                                    .join(""),
+                                                style: GoogleFonts.nunitoSans(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color(0xff323438))),
+                                          ]));
                                         },
-                                      
                                       ),
                                       Spacer(),
                                       GestureDetector(
@@ -253,7 +260,11 @@ class ProfileSetup extends StatelessWidget {
                                                 BorderRadius.circular(20),
                                           )),
                                       onPressed: () {
-                                        Navigator.pushNamed(context, "/main");
+                                        if (args.isSetup == true) {
+                                          Navigator.pushNamed(context, "/main");
+                                        } else {
+                                          Navigator.pop(context);
+                                        }
                                       },
                                       child: Center(
                                         child: Text(

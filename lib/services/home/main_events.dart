@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
+
 
 import 'package:cizo/models/question_model.dart';
 import 'package:cizo/models/quizcard_model.dart';
 import 'package:cizo/services/mock_data.dart';
-import 'package:http/http.dart' as http;
+
 
 class HomeEvents {
   Future<List<QuizCardModel>> getCards() async {

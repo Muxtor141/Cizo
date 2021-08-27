@@ -1,10 +1,14 @@
-import 'package:cizo/parts/02.Onboarding/main.dart';
-import 'package:cizo/parts/03-05.Auth/auth_main.dart';
+
+
 import 'package:cizo/parts/04.setup/countries.dart';
 import 'package:cizo/parts/04.setup/main.dart';
+import 'package:cizo/parts/auth/auth_main.dart';
+import 'package:cizo/parts/home/home_main.dart';
+import 'package:cizo/parts/onboarding/main.dart';
+import 'package:cizo/services/auth/auth_bloc.dart';
 import 'package:cizo/services/onboarding/onboardin_cubits.dart';
 import 'package:cizo/services/setup/selected_country.dart';
-import 'package:cizo/parts/08.home/home_main.dart';
+
 import 'package:cizo/services/home/fetchdata_main.dart';
 import 'package:cizo/services/home/fetchdata_public.dart';
 import 'package:cizo/services/home/public_events.dart';
@@ -26,7 +30,10 @@ Map<String, Widget Function(BuildContext)> routeMap(BuildContext context) {
           BlocProvider.value(
               value: BlocProvider.of<SelectedCountryCubit>(context))
         ], child: CountriesListPage()),
-    'auth': (c) => AuthMain(),
+    'auth': (c) => MultiBlocProvider(providers:[
+       BlocProvider<AuthBloc>(
+                create: (c) => AuthBloc()),
+    ],child: AuthMain()),
     "/main": (c) => MultiBlocProvider(
           providers: [
             BlocProvider<OnboardingPagingBloc>(
@@ -38,14 +45,14 @@ Map<String, Widget Function(BuildContext)> routeMap(BuildContext context) {
           ],
           child: HomeMain(),
         ),
-    'profileSetup': (c) => MultiBlocProvider(
+    ProfileSetup.routeName: (c) => MultiBlocProvider(
           providers: [
             BlocProvider<UploadImageCubit>(create: (c) => UploadImageCubit()),
             BlocProvider<SelectedCountryCubit>(
                 create: (c) => SelectedCountryCubit()),
             BlocProvider<SelectCountry>(create: (c) => SelectCountry()),
           ],
-          child: ProfileSetup(),
+          child:  ProfileSetup(),
         )
   };
 }
@@ -122,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 create: (c) => FetchPublicBLoc()..add(UpdatePublicCardList())),
             BlocProvider<FetchDataBLoc>(create: (c) => FetchDataBLoc()),
           ],
-          child: HomeMain(),
+          child: OnboardingMain(),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.

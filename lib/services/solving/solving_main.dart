@@ -15,7 +15,7 @@ class SolvingBloc extends Bloc<SolvingEvents, SingleQuestionModel> {
   @override
   Stream<SingleQuestionModel> mapEventToState(SolvingEvents event) async* {
     if (event is UpdateIndex) {
-      list = await event.getSingleQuiz(event.model);
+      list = await event.getSingleQuiz(event.model,event.type);
       yield list[currentIndex];
     }
     if (event is NextQuestion) {

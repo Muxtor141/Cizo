@@ -1,7 +1,6 @@
-import 'package:cizo/models/question_model.dart';
-import 'package:cizo/parts/quiz/answers.dart';
-import 'package:cizo/parts/quiz/question.dart';
-import 'package:cizo/parts/quiz/timer.dart';
+import 'package:cizo/parts/solving/answers.dart';
+import 'package:cizo/parts/solving/question.dart';
+import 'package:cizo/parts/solving/timer.dart';
 import 'package:cizo/services/leaderboard/leaderboard_bloc.dart';
 import 'package:cizo/services/leaderboard/leaderboard_events.dart';
 import 'package:cizo/services/solving/solving_controller_cubit.dart';

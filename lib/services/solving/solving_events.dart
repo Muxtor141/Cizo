@@ -6,7 +6,8 @@ import 'package:cizo/models/single_question_model.dart';
 import '../mock_data.dart';
 
 class SolvingEvents {
-  Future<List<SingleQuestionModel>> getSingleQuiz(String code) async {
+  Future<List<SingleQuestionModel>> getSingleQuiz(
+      String code, bool type) async {
     final db = MockDataQuizzes();
 
     // final response = await http.get(Uri.parse("someUrl"));
@@ -15,7 +16,13 @@ class SolvingEvents {
     // } else {
     //   throw SocketException('No internet');
     // }
-    var response = await db.getQuestionsList();
+    var response;
+    if (type = false) {
+      response = await db.getQuestionsList();
+    } else {
+       response = await db.getPublicQuestionsList();
+    }
+
     List responseList = jsonDecode(response);
 
     var question =
@@ -25,7 +32,6 @@ class SolvingEvents {
     for (var singlequestion in question['questions']) {
       var wrongAnswers = singlequestion['answers'];
       var item = SingleQuestionModel(
-       
           question: singlequestion['question'],
           rightAnswer: singlequestion['answers'][0],
           wrongAnswers: wrongAnswers.getRange(1, 4).toList());
@@ -38,7 +44,8 @@ class SolvingEvents {
 
 class UpdateIndex extends SolvingEvents {
   final String model;
-  UpdateIndex(this.model);
+  final bool type;
+  UpdateIndex(this.model, this.type);
 }
 
 class NextQuestion extends SolvingEvents {}

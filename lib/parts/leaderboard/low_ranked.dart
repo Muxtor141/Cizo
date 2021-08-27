@@ -1,11 +1,7 @@
 import 'package:cizo/models/leader_model.dart';
-import 'package:cizo/parts/08.home/home_main.dart';
-import 'package:cizo/services/home/fetchdata_main.dart';
-import 'package:cizo/services/home/fetchdata_public.dart';
-import 'package:cizo/services/home/public_events.dart';
+
 import 'package:cizo/services/leaderboard/leaderboard_bloc.dart';
-import 'package:cizo/services/onboarding/onboarding_bloc.dart';
-import 'package:cizo/services/public/ui_cubit.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';

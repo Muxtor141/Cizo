@@ -1,6 +1,6 @@
 import 'package:cizo/models/leader_model.dart';
 import 'package:cizo/models/single_question_model.dart';
-import 'package:cizo/parts/quiz/result_screen.dart';
+import 'package:cizo/parts/solving/result_screen.dart';
 import 'package:cizo/services/leaderboard/leaderboard_bloc.dart';
 import 'package:cizo/services/leaderboard/leaderboard_events.dart';
 import 'package:cizo/services/solving/solving_events.dart';

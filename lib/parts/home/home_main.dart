@@ -1,5 +1,6 @@
-import 'package:cizo/parts/08.home/bottom_navbar.dart';
-import 'package:cizo/parts/08.home/home_page.dart';
+
+import 'package:cizo/parts/home/bottom_navbar.dart';
+import 'package:cizo/parts/home/home_page.dart';
 import 'package:cizo/parts/profile/profile_main.dart';
 import 'package:flutter/material.dart';
 

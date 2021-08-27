@@ -1,4 +1,4 @@
-import 'package:cizo/parts/08.home/home_main.dart';
+
 import 'package:cizo/parts/leaderboard/leaderboard.dart';
 import 'package:cizo/services/leaderboard/leaderboard_bloc.dart';
 import 'package:cizo/services/leaderboard/leaderboard_events.dart';

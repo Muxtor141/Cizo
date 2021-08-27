@@ -20,6 +20,7 @@ class AuthMain extends StatefulWidget {
 }
 
 class _AuthMainState extends State<AuthMain> {
+ 
   bool isLoginPage = true;
   bool isExtended = true;
 

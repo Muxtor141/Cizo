@@ -9,7 +9,7 @@ class AuthTextField extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final bool isLogin;
 
-  AuthTextField(
+ const AuthTextField(
       {Key? key,
       required this.isLogin,
       required this.controller,
@@ -121,6 +121,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
+              disabledBorder: decoration1,
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor),
                 borderRadius: BorderRadius.circular(20),

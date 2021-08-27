@@ -11,5 +11,10 @@ class AuthBloc extends Bloc<Authentication, bool> {
     if (event is SignUp) {
       await event.registrateUser(event.email, event.password);
     }
+    if(event is SignIn){
+       await event.login(event.email1, event.password1);
+    }
+
+
   }
 }

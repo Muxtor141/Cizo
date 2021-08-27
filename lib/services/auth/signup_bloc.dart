@@ -24,6 +24,29 @@ class Authentication {
     }
   }
 
+  Future login(String email, String password) async {
+    try {
+      UserCredential userCredential = await firebase.signInWithEmailAndPassword(
+          email: email, password: password);
+      User? user = userCredential.user;
+
+      return user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'wrong-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'user-not-found') {
+        print('The account already exists for that email.');
+      } else if (e.code == 'invalid-email') {
+        print("invalid-email");
+      } else if (e.code == 'user-disabled') {
+        print("Not Allowed");
+      }
+    } catch (e) {
+      print('${e} AUTH PROBLEM');
+    }
+    
+  }
+
   Stream<User> get user => firebase.authStateChanges().map((event) => event!);
 }
 
@@ -32,6 +55,11 @@ class SignUp extends Authentication {
   final String password;
   SignUp(this.email, this.password);
 }
-class GetUserStatus extends Authentication{
-  
+
+class GetUserStatus extends Authentication {}
+
+class SignIn extends Authentication {
+  final String email1;
+  final String password1;
+  SignIn(this.email1, this.password1);
 }

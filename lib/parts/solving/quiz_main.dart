@@ -20,9 +20,6 @@ class QuizSolvingMain extends StatelessWidget {
     final sizeQuery = MediaQuery.of(context).size;
     final heightQuery = MediaQuery.of(context).size.height;
 
-
-
-
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: MultiBlocProvider(
@@ -33,20 +30,17 @@ class QuizSolvingMain extends StatelessWidget {
         ],
         child: BlocBuilder<SolvingControllerCubit, bool>(
           builder: (blocContext, blocState) {
-
-
             if (blocState) {
               isExtended = true;
-            } else {
-         
-            }
+            } else {}
             return Column(
               children: [
                 AnimatedContainer(
                   duration: Duration(milliseconds: 2000),
                   height: blocState == false ? 300 : 0,
                 ),
-                QuizTimer(time: 1,
+                QuizTimer(
+                  time: quizTime,
                   blocContext: blocContext,
                   solvingState: blocState,
                 ),
@@ -101,7 +95,11 @@ class QuizSolvingMain extends StatelessWidget {
                     ),
                     child: AnimatedSwitcher(
                       duration: Duration(milliseconds: 1000),
-                      child: isExtended ? QuizAnswers(blocState: blocState,) : Container(),
+                      child: isExtended
+                          ? QuizAnswers(
+                              blocState: blocState,
+                            )
+                          : Container(),
                     ),
                   ),
                 ),

@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:cizo/parts/04.setup/countries.dart';
+import 'package:cizo/parts/setup/countries.dart';
 import 'package:cizo/services/setup/select_country.dart';
 import 'package:cizo/services/setup/selected_country.dart';
 import 'package:cizo/services/setup/setup_cubit.dart';
